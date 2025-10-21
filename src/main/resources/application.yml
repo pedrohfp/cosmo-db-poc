@@ -11,6 +11,8 @@ azure:
         name: events
         partition: /transactionId
         ttl: -1
+  applicationinsights:
+    connection-string: ${APPLICATIONINSIGHTS_CONNECTION_STRING}
 
 logging:
   level:

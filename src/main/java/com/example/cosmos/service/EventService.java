@@ -26,10 +26,26 @@ public class EventService {
     }
 
     /**
-     * Cria um novo evento.
+     * Cria um novo evento com transactionId gerado automaticamente.
+     */
+    public Event createEvent(EventType eventType) {
+        String transactionId = UUID.randomUUID().toString();
+        log.info("Creating event with auto-generated transactionId={}, eventType={}", transactionId, eventType);
+        
+        Event event = new Event();
+        event.setId(UUID.randomUUID().toString());
+        event.setTransactionId(transactionId);
+        event.setEventType(eventType);
+        event.setTimestamp(Instant.now());
+        
+        return eventRepository.save(event);
+    }
+
+    /**
+     * Cria um novo evento com transactionId específico (método mantido para compatibilidade).
      */
     public Event createEvent(String transactionId, EventType eventType) {
-        log.debug("Creating event: transactionId={}, eventType={}", transactionId, eventType);
+        log.info("Creating event: transactionId={}, eventType={}", transactionId, eventType);
         
         Event event = new Event();
         event.setId(UUID.randomUUID().toString());
@@ -44,7 +60,7 @@ public class EventService {
      * Busca um evento por ID e transactionId.
      */
     public Event getEvent(String id, String transactionId) {
-        log.debug("Getting event: id={}, transactionId={}", id, transactionId);
+        log.info("Getting event: id={}, transactionId={}", id, transactionId);
         return eventRepository.findById(id, transactionId)
             .orElseThrow(() -> new RuntimeException("Event not found: id=" + id + ", transactionId=" + transactionId));
     }
@@ -53,7 +69,7 @@ public class EventService {
      * Busca todos os eventos de uma transação.
      */
     public List<Event> getEventsByTransactionId(String transactionId) {
-        log.debug("Getting events by transactionId={}", transactionId);
+        log.info("Getting events by transactionId={}", transactionId);
         return eventRepository.findByTransactionId(transactionId);
     }
 
@@ -61,7 +77,7 @@ public class EventService {
      * Busca todos os eventos.
      */
     public List<Event> getAllEvents() {
-        log.debug("Getting all events");
+        log.info("Getting all events");
         return eventRepository.findAll();
     }
 }

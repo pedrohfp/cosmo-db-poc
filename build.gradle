@@ -28,7 +28,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.azure.spring:spring-cloud-azure-starter-actuator'
 	implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
+    implementation 'com.microsoft.azure:applicationinsights-core:3.7.4'
+    implementation 'com.microsoft.azure:applicationinsights-runtime-attach:3.7.4'
+    implementation 'com.microsoft.azure:applicationinsights-logging-logback:2.6.4'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

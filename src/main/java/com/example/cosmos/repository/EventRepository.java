@@ -32,7 +32,7 @@ public class EventRepository {
      * Salva um evento no Cosmos DB.
      */
     public Event save(Event event) {
-        log.debug("Saving event: {}", event);
+        log.info("Saving event: {}", event);
         try {
             eventsContainer.createItem(
                 event,
@@ -51,7 +51,7 @@ public class EventRepository {
      * Busca um evento por ID e transactionId (partition key).
      */
     public Optional<Event> findById(String id, String transactionId) {
-        log.debug("Finding event by id={}, transactionId={}", id, transactionId);
+        log.info("Finding event by id={}, transactionId={}", id, transactionId);
         try {
             var response = eventsContainer.readItem(
                 id,
@@ -71,7 +71,7 @@ public class EventRepository {
      * Busca todos os eventos de uma transação.
      */
     public List<Event> findByTransactionId(String transactionId) {
-        log.debug("Finding events by transactionId={}", transactionId);
+        log.info("Finding events by transactionId={}", transactionId);
         
         String query = "SELECT * FROM c WHERE c.transactionId = @transactionId";
         CosmosQueryRequestOptions options = new CosmosQueryRequestOptions();
@@ -95,7 +95,7 @@ public class EventRepository {
      * Busca todos os eventos.
      */
     public List<Event> findAll() {
-        log.debug("Finding all events");
+        log.info("Finding all events");
         
         String query = "SELECT * FROM c";
         CosmosQueryRequestOptions options = new CosmosQueryRequestOptions();

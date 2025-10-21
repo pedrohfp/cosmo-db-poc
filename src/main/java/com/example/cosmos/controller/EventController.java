@@ -1,6 +1,7 @@
 package com.example.cosmos.controller;
 
 import com.example.cosmos.controller.dto.CreateEventRequest;
+import com.example.cosmos.controller.dto.EventCreatedResponse;
 import com.example.cosmos.controller.dto.EventResponse;
 import com.example.cosmos.service.EventService;
 import jakarta.validation.Valid;
@@ -29,22 +30,21 @@ public class EventController {
     }
 
     /**
-     * POST /api/events - Cria um novo evento
+     * POST /api/events - Cria um novo evento com transactionId gerado automaticamente
      * 
      * Body exemplo:
      * {
-     *   "transactionId": "tx-12345",
      *   "eventType": "STARTED"
      * }
      */
     @PostMapping
-    public ResponseEntity<EventResponse> createEvent(@Valid @RequestBody CreateEventRequest request) {
+    public ResponseEntity<EventCreatedResponse> createEvent(@Valid @RequestBody CreateEventRequest request) {
         log.info("POST /api/events - Creating event: {}", request);
         
-        var event = eventService.createEvent(request.getTransactionId(), request.getEventType());
-        var response = EventResponse.from(event);
+        var event = eventService.createEvent(request.getEventType());
+        var response = new EventCreatedResponse("Evento cadastrado com sucesso", event.getTransactionId());
         
-        log.info("Event created successfully: {}", response);
+        log.info("Event created successfully with transactionId: {}", event.getTransactionId());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
