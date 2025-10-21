@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+azure:
+  cosmos:
+    uri: ${COSMOS_URI}
+    key: ${COSMOS_KEY}
+    database: ${COSMOS_DATABASE}
+    events:
+      container:
+        name: events
+        partition: /transactionId
+        ttl: -1
+
+logging:
+  level:
+    com.example.cosmos: DEBUG
+    com.azure.cosmos: WARN
